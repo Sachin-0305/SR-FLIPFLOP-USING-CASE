@@ -42,24 +42,24 @@ The maximum possible groupings of adjacent ones are already shown in the figure.
 */
 ```
 
-module SR_flipflop(q, q_bar, s,r, clk, reset);//SR Flip Flop Behavioral Level using ‘case’ 
-  input s,r,clk, reset;
+module sr_flipflop(q, q_bar, s, r, clk, reset);
+  input s, r, clk, reset;
   output reg q;
   output q_bar;
- 
-  always@(posedge clk) begin // for synchronous reset
-    if(!reset)       
-	 q <= 0;
-    else 
-  begin
-      case({s,r})       
-	     2'b00: q <= q;		   // No change
-        2'b01: q <= 1'b0;	   // reset
-        2'b10: q <= 1'b1;	  // set
-        2'b11: q <= 1'bx;   // Invalid inputs
+
+  always @(posedge clk) begin
+    if (!reset) 
+      q <= 1'b0;
+    else begin
+      case ({s, r})
+        2'b01: q <= 1'b0;
+        2'b10: q <= 1'b1;
+        2'b11: q <= 1'bx;
+        default: q <= q;
       endcase
     end
   end
+
   assign q_bar = ~q;
 endmodule
 ```
